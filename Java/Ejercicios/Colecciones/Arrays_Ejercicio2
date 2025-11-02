@@ -1,0 +1,42 @@
+
+public class Arrays_Ejercicio2 {
+    public static void main(String[] args) {
+        
+        // 1. ARRAYS
+        // Si queremos almacenar una lista de 5 números enteros:
+        int[] numeros = new int [5]  //Declaracion array
+        numeros[0] = 1;              //Primera posición del array
+        numeros[1] = 2;              //Segunda posición del array
+        numeros[2] = 3;              //Tercera posición del array
+        numeros[3] = 4;              //Cuarta posición del array
+        numeros[4] = 5;              //Quinta posición del array
+        
+        // Acceso a los números mediante su índice
+        int primerNumero = numeros[0] // 1 
+        int segundoNumero = numeros[1] // 2
+        int tercerNumero = numeros[2] // 3
+        
+        // 2. COLECCION O LISTA
+        //Lista de nombres en un ArrayList llamado nombres
+        ArrayList<String> nombres = new ArrayList<String>();
+        
+        //Uso del metodo (add) para agregar tres nombres.
+        nombres.add("Petunia");
+        nombres.add("Alfredo");
+        nombres.add("Romualdo");
+
+        //Se puede acceder a ellos mediante su índice-
+        String primerNombre = nombres.get(0); //Se obtiene el valor "Petunia"
+        String segundoNombre = nombres.get(1); //Se obtiene el valor "Alfredo"
+        String segundoNombre = nombres.get(2); //Se obtiene el valor "Romualdo"
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,42 @@
+# =========================
+# Java
+# =========================
+*.class
+*.jar
+*.war
+*.ear
+*.iml
+/out/
+/.idea/
+*.log
+
+# =========================
+# Kotlin
+# =========================
+*.class
+*.jar
+*.iml
+/.gradle/
+/build/
+/out/
+.idea/
+
+# =========================
+# Python
+# =========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+env/
+venv/
+*.egg-info/
+*.egg
+pip-log.txt
+*.log
+
+# =========================
+# Archivos generales de sistema
+# =========================
+.DS_Store
+Thumbs.db
