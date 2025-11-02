@@ -1,4 +1,4 @@
-\# 💻 Repositorio DAM
+💻 Repositorio DAM
 
 
 
@@ -12,7 +12,7 @@ Contiene trabajo en Java, Python y Kotlin, organizado por lenguaje y tipo de pr�
 
 
 
-\## 🚀 Estructura del repositorio
+🚀 Estructura del repositorio
 
 
 
@@ -72,11 +72,11 @@ Ejemplo: gestor de pedidos, aplicaciones de consola con registro y lógica de ne
 
 
 
-\- Java – Programación orientada a objetos, ficheros, colecciones, hilos, librerías básicas.  
+- Java – Programación orientada a objetos, ficheros, colecciones, hilos, librerías básicas.  
 
-\- Python – Scripts y ejercicios de lógica, estructuras de datos y manejo de archivos.  
+- Python – Scripts y ejercicios de lógica, estructuras de datos y manejo de archivos.  
 
-\- Kotlin – Ejercicios y mini proyectos enfocados en programación moderna y Android (cuando aplique).  
+- Kotlin – Ejercicios y mini proyectos enfocados en programación moderna y Android (cuando aplique).  
 
 
 
@@ -88,11 +88,11 @@ Ejemplo: gestor de pedidos, aplicaciones de consola con registro y lógica de ne
 
 
 
-\- Continuar subiendo nuevos ejercicios y proyectos a cada carpeta.  
+- Continuar subiendo nuevos ejercicios y proyectos a cada carpeta.  
 
-\- Documentar y comentar mejor los ejercicios existentes.  
+- Documentar y comentar mejor los ejercicios existentes.  
 
-\- Separar los proyectos más destacados en repositorios individuales, listos para mostrar en mi portfolio profesional.
+- Separar los proyectos más destacados en repositorios individuales, listos para mostrar en mi portfolio profesional.
 
 
 
@@ -104,11 +104,11 @@ Ejemplo: gestor de pedidos, aplicaciones de consola con registro y lógica de ne
 
 
 
-1\. Navega por la carpeta del lenguaje que quieras practicar (`Java/`, `Python/`, `Kotlin/`).  
+1. Navega por la carpeta del lenguaje que quieras practicar (`Java/`, `Python/`, `Kotlin/`).  
 
-2\. Dentro de cada lenguaje, entra en `ejercicios/` para prácticas pequeñas, o en `proyectos/` para ejercicios más grandes.  
+2. Dentro de cada lenguaje, entra en `ejercicios/` para prácticas pequeñas, o en `proyectos/` para ejercicios más grandes.  
 
-3\. Abre los archivos con tu IDE favorito (IntelliJ para Java/Kotlin, VSCode o PyCharm para Python).  
+3. Abre los archivos con tu IDE favorito (IntelliJ para Java/Kotlin, VSCode o PyCharm para Python).  
 
 
 
