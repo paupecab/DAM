@@ -28,21 +28,23 @@ public class GestorAlmacen implements Runnable {
                 //Tiempo de procesamiento aleatorio para cada hilo
                 int tiempoProcesamiento = ThreadLocalRandom.current().nextInt(2000,5001);
                 Thread.sleep(tiempoProcesamiento);
-                System.out.println(
-                        "["+Thread.currentThread().getName()+"][GESTOR] Procesando pedido: "
-                                +pedidoActual.getId()+" | Tiempo: "+tiempoProcesamiento+"ms...");
 
                 //cambio de estado de pedido
                 pedidoActual.setEstado(EstadoPedido.PROCESANDO);
+                System.out.println(
+                        "["+Thread.currentThread().getName()+"][GESTOR] Pedido: "
+                                +pedidoActual.getId()+" "+pedidoActual.getEstado());
+
 
                 //PRODUCIR pedidos procesados
                 colaProcesados.agregar(pedidoActual);
                 System.out.println("["+Thread.currentThread().getName()+
-                        "][GESTOR]: Pedido procesado: "+pedidoActual.getId());
+                        "][GESTOR]: Pedido procesado: "+pedidoActual.getId()+
+                        " | Tiempo: "+tiempoProcesamiento+"ms...");
 
             }catch (InterruptedException e){
                 System.out.println("["+Thread.currentThread().getName()
-                        +"][GESTOR]: Terminado por interrupcion.");
+                        +"]: Terminado por interrupcion.");
                 Thread.currentThread().interrupt();
                 break;
             }

@@ -20,14 +20,14 @@ public class ColaPedidos {
         while (pedidos.size() == capacidadMaxima){
             System.out.println(
                     "["+Thread.currentThread().getName()+"]"+
-                    "[ALMACEN]: Capacidad máxima de pedidos alcanzada: "+capacidadMaxima+". En espera.");
+                    ": Capacidad máxima de pedidos alcanzada: "+capacidadMaxima+". En espera.");
             wait();
         }
 
         pedidos.add(pedido);
         System.out.println(
-                "["+Thread.currentThread().getName()+"][CLIENTE]: Produce pedido "+
-                pedido.getId()+". Total en cola: "+pedidos.size());
+                "["+Thread.currentThread().getName()+"]: Produce "+
+                pedido.toString()+". Total en cola: "+pedidos.size());
         notifyAll(); // despertar a los hilos que están esperando
     }
 
@@ -38,13 +38,13 @@ public class ColaPedidos {
         while (pedidos.isEmpty()){
             wait();
             System.out.println(
-                    "["+Thread.currentThread().getName()+"][ALMACEN]"+
+                    "["+Thread.currentThread().getName()+"]"+
                             ": Cola vacía. Esperando pedidos.");
         }
 
         pedido = pedidos.poll(); //retira y devuelve el primer elemento
         System.out.println(
-                "["+Thread.currentThread().getName()+"][ALMACEN]"+
+                "["+Thread.currentThread().getName()+"]"+
                         ": Pedido retirado: "+pedido.getId()+
                         ". Total en cola: "+pedidos.size());
 

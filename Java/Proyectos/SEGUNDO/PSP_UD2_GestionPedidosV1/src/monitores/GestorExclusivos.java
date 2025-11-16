@@ -25,12 +25,11 @@ public class GestorExclusivos {
     private void liberar(String p, String idCliente){
         if (exclusivos.containsKey(p) && !exclusivos.get(p).equals(ESTADO_VENDIDO)){
             exclusivos.put(p,ESTADO_LIBRE);
-            System.out.println("[EXCLUSIVO] "+Thread.currentThread().getName()+" LIBERA Producto "+p+
+            System.out.println(Thread.currentThread().getName()+" LIBERA Producto "+p+
                     " y notifica.");
             notifyAll();
         }
     }
-
 
     // metodo que asegura productos de forma atomica
     public synchronized boolean intentarComprar(String idCliente, String p1, String p2)
@@ -44,15 +43,24 @@ public class GestorExclusivos {
             // --- INTENTA ASEGURAR PRODUCTO 1 -> espera bloqueante ---
             System.out.println("[" + hilo + "] Intenta asegurar P1: " + p1);
 
-            // mientras p1 no esté libre, el hilo debe esperar
+            // mientras p1 no esté libre, el hilo debe esperar a que otro lo despierte
+            // cuando complete la compra
             while (!exclusivos.get(p1).equals(ESTADO_LIBRE)) {
                 System.out.println("[" + hilo + "] Espera por P1: " + p1);
                 wait();
+
+                // si al despertar e intentar cogerlo está vendido, devuelve false
+                if (exclusivos.get(p1).equals(ESTADO_VENDIDO)){
+                    System.out.println("[" + hilo + "] No queda stock de P1: "+p1+" está VENDIDO.");
+                    return false;
+                }
             }
 
             // p1 está libre, se asegura y se marca como asegurado con el id del cliente
             exclusivos.put(p1, idCliente);
             System.out.println("[" + hilo + "] ASEGURA P1: " + p1);
+
+            // retardo aleatorio
             Thread.sleep(ThreadLocalRandom.current().nextInt(2000, 5001));
 
             // --- INTENTAR ASEGURAR PRODUCTO 2 ---
@@ -61,8 +69,8 @@ public class GestorExclusivos {
             if (!exclusivos.get(p2).equals(ESTADO_LIBRE)) {
                 // si p2 esta ocupado esperamos con timeout para no bloquear indefinidamente
                 System.out.println("[" + hilo + "] P2 ocupado. Espera con timeout " +
-                        "(" + 5000 + "ms)...");
-                wait(5000);
+                        "(" + 3000 + "ms)...");
+                wait(3000);
 
                 // al despertar verificamos estado
                 if (!exclusivos.get(p2).equals(ESTADO_LIBRE)) {
@@ -78,11 +86,10 @@ public class GestorExclusivos {
             // --- P2 ASEGURADO Y CONFIRMACIÓN ---
 
             // si se llega aquí, p2 esta libre, lo asegura
-            Thread.sleep(ThreadLocalRandom.current().nextInt(2000, 5001));
             exclusivos.put(p2, idCliente);
             System.out.println("[" + hilo + "] ASEGURA P2: " + p2);
 
-            // retardos aleatorios
+            // retardo aleatorio
             Thread.sleep(ThreadLocalRandom.current().nextInt(2000, 5001));
             System.out.println("[" + hilo + "] Pagando paquete... ");
 
@@ -93,6 +100,7 @@ public class GestorExclusivos {
             System.out.println(">>> [" + hilo +
                     "] COMPRA CONFIRMADA: Paquete [" + p1 + ", " + p2 + "]");
 
+            notifyAll();
             return true;
         }
     }

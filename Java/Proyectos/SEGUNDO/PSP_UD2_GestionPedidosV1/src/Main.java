@@ -6,7 +6,7 @@ import monitores.*;
 public class Main {
     public static void main(String[] args){
         final int CAPACIDAD_ALMACEN = 25;
-        final int numeroClientes = 10;
+        final int numeroClientes = 5;
         final int numeroGestoresAlmacen = 3;
         final int numeroTransportistas = 2;
 
@@ -16,19 +16,18 @@ public class Main {
         GestorExclusivos gestorExclusivos = new GestorExclusivos();
 
 
-
         //hilo transportista
         Runnable tareaTransportista = ()->{
             while(true){
                 try{
-                    Pedido pedidoEnviado = colaProcesados.retirar();
-                    if (pedidoEnviado == null) break;
+                    Pedido pedidoActual = colaProcesados.retirar();
+                    if (pedidoActual == null) break;
 
                     //actualización de pedido
-                    pedidoEnviado.setEstado(EstadoPedido.ENVIADO);
-                    System.out.println("["+Thread.currentThread().getName()+
-                            "][TRANSPORTISTA]: ENVÍO COMPLETADO para pedido "+
-                            pedidoEnviado.getId());
+                    pedidoActual.setEstado(EstadoPedido.ENVIADO);
+                    System.out.println(
+                            "["+Thread.currentThread().getName()+"][TRANSPORTISTA] Pedido: "
+                                    +pedidoActual.getId()+" "+pedidoActual.getEstado());
 
                 }catch(InterruptedException e){
                     System.out.println(Thread.currentThread().getName()+": Detenido por interrupción.");

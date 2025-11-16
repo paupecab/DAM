@@ -65,13 +65,13 @@ public class Cliente extends Thread {
             try{
                 int idPedido = siguienteId();
 
-                if (ThreadLocalRandom.current().nextDouble() < 0.3) {
+                if (ThreadLocalRandom.current().nextDouble() < 0.5) {
                     // ---- COMPRA DE PRODUCTOS NORMALES ----
 
                     List<Producto> carrito = new ArrayList<>();
 
                     // generar productos aleatorios
-                    int cantidadDistintos = ThreadLocalRandom.current().nextInt(1, 11);
+                    int cantidadDistintos = ThreadLocalRandom.current().nextInt(1, 4);
 
                     for (int i = 0; i < cantidadDistintos; i++) {
                         // Seleccionar un producto aleatorio del array
@@ -114,12 +114,13 @@ public class Cliente extends Thread {
                         Pedido nuevoPedido = new Pedido(idPedido, paquete, EstadoPedido.PENDIENTE);
                         colaPendientes.agregar(nuevoPedido);
                     }else{
-                        System.out.println("<<< [" + Thread.currentThread().getName() + "] No se ha podido generar el " +
+                        System.out.println("<<< [" + Thread.currentThread().getName() + "] " +
+                                "No se ha podido generar el " +
                                 "pedido de exclusivos: Pedido "+idPedido);
                     }
                 }
                 //Esperar entre un pedido y otro
-                //Thread.sleep(ThreadLocalRandom.current().nextInt(5000, 15001));
+                //Thread.sleep(ThreadLocalRandom.current().nextInt(2000, 5001));
 
             }catch (InterruptedException e){
                 System.out.println("["+Thread.currentThread().getName()
