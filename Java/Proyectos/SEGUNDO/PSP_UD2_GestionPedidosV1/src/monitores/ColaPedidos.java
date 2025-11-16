@@ -20,7 +20,7 @@ public class ColaPedidos {
         while (pedidos.size() == capacidadMaxima){
             System.out.println(
                     "["+Thread.currentThread().getName()+"]"+
-                    "[ALMACEN]: Capacidad máxima alcanzada: "+capacidadMaxima+". En espera.");
+                    "[ALMACEN]: Capacidad máxima de pedidos alcanzada: "+capacidadMaxima+". En espera.");
             wait();
         }
 

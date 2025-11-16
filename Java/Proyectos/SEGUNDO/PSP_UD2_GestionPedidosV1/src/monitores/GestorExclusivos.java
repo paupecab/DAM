@@ -25,7 +25,7 @@ public class GestorExclusivos {
     private void liberar(String p, String idCliente){
         if (exclusivos.containsKey(p) && !exclusivos.get(p).equals(ESTADO_VENDIDO)){
             exclusivos.put(p,ESTADO_LIBRE);
-            System.out.println("[EXCLUSIVO] "+idCliente+" LIBERA Producto "+p+
+            System.out.println("[EXCLUSIVO] "+Thread.currentThread().getName()+" LIBERA Producto "+p+
                     " y notifica.");
             notifyAll();
         }
@@ -33,61 +33,67 @@ public class GestorExclusivos {
 
 
     // metodo que asegura productos de forma atomica
-    public synchronized boolean intentarComprar(String idCliente, String p1, String p2) throws InterruptedException {
+    public synchronized boolean intentarComprar(String idCliente, String p1, String p2)
+            throws InterruptedException {
         String hilo = Thread.currentThread().getName();
 
-        // --- INTENTA ASEGURAR PRODUCTO 1 -> espera bloqueante ---
-        System.out.println("[" + hilo + "] Intenta asegurar P1: " + p1);
+        if (exclusivos.get(p1).equals(ESTADO_VENDIDO)){
+            System.out.println("[" + hilo + "] No queda stock de P1: "+p1+" está VENDIDO.");
+            return false;
+        }else{
+            // --- INTENTA ASEGURAR PRODUCTO 1 -> espera bloqueante ---
+            System.out.println("[" + hilo + "] Intenta asegurar P1: " + p1);
 
-        // mientras p1 no esté libre, el hilo debe esperar
-        while (!exclusivos.get(p1).equals(ESTADO_LIBRE)) {
-            System.out.println("[" + hilo + "] Espera por P1: " + p1 + " (Ocupado por: "
-                    + exclusivos.get(p1) + ")");
-            wait();
-        }
-
-        // p1 está libre, se asegura y se marca como asegurado con el id del cliente
-        exclusivos.put(p1, idCliente);
-        System.out.println("[" + hilo + "] ASEGURA P1: " + p1);
-
-
-        // --- INTENTAR ASEGURAR PRODUCTO 2 - Estrategia Anti-Deadlock con Timed Wait ---
-        System.out.println("[" + hilo + "] Intenta asegurar P2: " + p2);
-
-        if (!exclusivos.get(p2).equals(ESTADO_LIBRE)) {
-            // si p2 esta ocupado esperamos con timeout para no bloquear indefinidamente
-            System.out.println("[" + hilo + "] P2 ocupado. Espera con timeout " +
-                    "(" + 5000 + "ms)...");
-            wait(5000);
-
-            // al despertar verificamos estado
-            if (!exclusivos.get(p2).equals(ESTADO_LIBRE)) {
-                // Fallo: p2 sigue ocupado después del tiempo razonable
-                System.out.println("[" + hilo + "] Fallo en P2. Producto " + p2 + " no liberado a tiempo.");
-
-                // liberacion de p1
-                liberar(p1, idCliente);
-                return false;
+            // mientras p1 no esté libre, el hilo debe esperar
+            while (!exclusivos.get(p1).equals(ESTADO_LIBRE)) {
+                System.out.println("[" + hilo + "] Espera por P1: " + p1);
+                wait();
             }
+
+            // p1 está libre, se asegura y se marca como asegurado con el id del cliente
+            exclusivos.put(p1, idCliente);
+            System.out.println("[" + hilo + "] ASEGURA P1: " + p1);
+            Thread.sleep(ThreadLocalRandom.current().nextInt(2000, 5001));
+
+            // --- INTENTAR ASEGURAR PRODUCTO 2 ---
+            System.out.println("[" + hilo + "] Intenta asegurar P2: " + p2);
+
+            if (!exclusivos.get(p2).equals(ESTADO_LIBRE)) {
+                // si p2 esta ocupado esperamos con timeout para no bloquear indefinidamente
+                System.out.println("[" + hilo + "] P2 ocupado. Espera con timeout " +
+                        "(" + 5000 + "ms)...");
+                wait(5000);
+
+                // al despertar verificamos estado
+                if (!exclusivos.get(p2).equals(ESTADO_LIBRE)) {
+                    // Fallo: p2 sigue ocupado después del tiempo razonable
+                    System.out.println("[" + hilo + "] Fallo en P2. Producto " + p2 + " no liberado a tiempo.");
+
+                    // liberacion de p1
+                    liberar(p1, idCliente);
+                    return false;
+                }
+            }
+
+            // --- P2 ASEGURADO Y CONFIRMACIÓN ---
+
+            // si se llega aquí, p2 esta libre, lo asegura
+            Thread.sleep(ThreadLocalRandom.current().nextInt(2000, 5001));
+            exclusivos.put(p2, idCliente);
+            System.out.println("[" + hilo + "] ASEGURA P2: " + p2);
+
+            // retardos aleatorios
+            Thread.sleep(ThreadLocalRandom.current().nextInt(2000, 5001));
+            System.out.println("[" + hilo + "] Pagando paquete... ");
+
+            // se marcan ambos productos como vendidos
+            exclusivos.put(p1, ESTADO_VENDIDO);
+            exclusivos.put(p2, ESTADO_VENDIDO);
+
+            System.out.println(">>> [" + hilo +
+                    "] COMPRA CONFIRMADA: Paquete [" + p1 + ", " + p2 + "]");
+
+            return true;
         }
-
-        // --- P2 ASEGURADO Y CONFIRMACIÓN ---
-
-        // si se llega aquí, p2 esta libre, lo asegura
-        exclusivos.put(p2, idCliente);
-        System.out.println("[" + hilo + "] ASEGURA P2: " + p2);
-
-        // retardos aleatorios
-        Thread.sleep(ThreadLocalRandom.current().nextInt(2000, 5001));
-        System.out.println("[" + hilo + "] Pagando paquete... ");
-
-        // se marcan ambos productos como vendidos
-        exclusivos.put(p1, ESTADO_VENDIDO);
-        exclusivos.put(p2, ESTADO_VENDIDO);
-
-        System.out.println(">>> [" + hilo +
-                "] COMPRA CONFIRMADA: Paquete [" + p1 + ", " + p2 + "]");
-
-        return true;
     }
 }
