@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.HelloWorld" tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tvPrincipal"
+        android:text="@string/hello_world"
+        android:textAlignment="center"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentTop="true"
+        android:layout_marginHorizontal="60dp"
+        android:layout_marginTop="60dp"/>
+
+    <Button
+        android:id="@+id/btnChangeActivity"
+        android:text="@string/acceder"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginHorizontal="60dp"
+        android:layout_marginBottom="60dp"
+
+        android:layout_alignParentBottom="true" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:text="@string/pregunta_nombre"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        />
+
+    <EditText
+        android:id="@+id/etName"
+
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/hintNombre"
+
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+
+        android:layout_below="@+id/tvName"
+       />
+
+</RelativeLayout>

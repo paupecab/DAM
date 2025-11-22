@@ -6,7 +6,7 @@ import monitores.*;
 public class Main {
     public static void main(String[] args){
         final int CAPACIDAD_ALMACEN = 25;
-        final int numeroClientes = 5;
+        final int numeroClientes = 10;
         final int numeroGestoresAlmacen = 3;
         final int numeroTransportistas = 2;
 

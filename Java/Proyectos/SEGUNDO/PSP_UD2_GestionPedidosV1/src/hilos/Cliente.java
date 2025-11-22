@@ -65,7 +65,7 @@ public class Cliente extends Thread {
             try{
                 int idPedido = siguienteId();
 
-                if (ThreadLocalRandom.current().nextDouble() < 0.5) {
+                if (ThreadLocalRandom.current().nextDouble() < 0) {
                     // ---- COMPRA DE PRODUCTOS NORMALES ----
 
                     List<Producto> carrito = new ArrayList<>();

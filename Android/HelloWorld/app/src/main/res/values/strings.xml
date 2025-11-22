@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Hello World</string>
+    <string name="hello_world">Hello, world.</string>
+    <string name="acceder">Acceder</string>
+    <string name="pregunta_nombre">¿Cómo te llamas?</string>
+    <string name="hintNombre">Nombre</string>
+</resources>
